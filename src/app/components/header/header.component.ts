@@ -26,66 +26,22 @@ import { ProductService } from '../../services/product.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-
-  // @Output() searchChange = new EventEmitter<string>();
-  // @Output() categoryChange = new EventEmitter<string>();
-
-  // searchText = '';
-  // selectedCategory = '';
-
-  // categories = [
-  //   { value: 'technology', label: 'Technology' },
-  //   { value: 'food', label: 'Food' }
-  // ];
-
-  // onSearch(): void {
-  //   this.searchChange.emit(this.searchText);
-  // }
-
-  // onCategoryChange(): void {
-  //   this.categoryChange.emit(this.selectedCategory);
-  // }
-
-  // menuOpen = false;
-
-  //   toggleMenu(): void {
-  //     this.menuOpen = !this.menuOpen;
-  //   }
-
-
-  // ####################
   constructor(private productService: ProductService){}
 
-  cartCount: number = 0;
+  public cartCount: number = 0;
+  public searchText: string = '';
+  public selectedCategory: string = '';
+  public categories: any = [];
 
   ngOnInit() {
     this.productService.cartCount$.subscribe(count => {
-    this.cartCount = count;
-  });
+      this.cartCount = count;
+    });
+    this.categories = this.productService.shopByCategories;
   }
 
-  
-  searchText: string = '';
-selectedCategory: string = '';
-
-// onSearchChange() {
-//   this.productService.setSearchText(this.searchText);
-// }
-
-// onCategoryChange() {
-//   this.productService.setCategory(this.selectedCategory);
-// }
-
-onSearch() {
-  this.productService.setSearchText(this.searchText);
-  this.productService.setCategory(this.selectedCategory);
-}
-
-categories = [
-  { name: 'Technology' },
-  { name: 'Watch' },
-  { name: 'Cosmetics' },
-  { name: 'Food' },
-  { name: 'Real Estate' }
-];
+  public onSearch(): void {
+    this.productService.setSearchText(this.searchText);
+    this.productService.setCategory(this.selectedCategory);
+  }  
 }

@@ -2,522 +2,444 @@
 
 @if(!isSearchText){
   <div class="d-flex justify-content-between align-items-center mb-3" >
-  <h6>Shop By Categories</h6>
-  <span class="text-success small">See All ›</span>
-</div>
+    <h6>Shop By Categories</h6>
+    <span class="text-success small">See All ›</span>
+  </div>
 }
 @if(!isSearchText){
-<div class="row g-3" >
-  <div class="col-lg-2 col-md-4 col-6" *ngFor="let cat of categories">
-    <div 
-      class="category-card text-center"
-      [class.active]="selectedCategory === cat.name"
-      (click)="setCategory(cat.name)"
-    >
-      <div class="icon-wrapper mb-3">
-        <i class="bi" [ngClass]="cat.icon"></i>
+  <div class="row g-3" >
+    <div class="col-lg-2 col-md-4 col-6" *ngFor="let cat of categories">
+      <div 
+        class="category-card text-center"
+        [class.active]="selectedCategory === cat.name"
+        (click)="setCategory(cat.name)"
+      >
+        <div class="icon-wrapper mb-3">
+          <i class="bi" [ngClass]="cat.icon"></i>
+        </div>
+        <p class="mb-0 fw-medium">{{ cat.name }}</p>
       </div>
-      <p class="mb-0 fw-medium">{{ cat.name }}</p>
     </div>
   </div>
-</div>
 }
   <div class="row g-3 mt-4" >
-    <div class="mt-4" *ngIf="getSelectedCategoryData() as selectedCat">
-@if(!isSearchText){
-  <div class="mt-4" *ngIf="getSelectedCategoryData() as selectedCat">
+      @if(!isSearchText){
+        <div class="mt-4" *ngIf="getSelectedCategoryData() as selectedCat">
+          <div class="row">
+            <div class="col-lg-2 col-md-4 col-6 mb-4" *ngFor="let product of selectedCat.items">
 
-  <div class="row">
-    <div class="col-lg-2 col-md-4 col-6 mb-4" *ngFor="let product of selectedCat.items">
+              <div class="card h-100 border-0 product-card position-relative">
 
-      <div class="card h-100 border-0 product-card position-relative">
+                <!-- Badge -->
+                <ng-container *ngIf="product.tag">
+                  <span
+                    class="badge position-absolute mt-2 mx-2 top-0 start-0 z-1"
+                    [ngClass]="{
+                      'bg-success': product.tag === 'New',
+                      'bg-warning text-dark': product.tag === 'Favorite',
+                      'bg-danger': product.tag?.includes('-'),
+                      'bg-secondary': product.tag === 'Sold Out'
+                    }">
+                    {{ product.tag }}
+                  </span>
+                </ng-container>
 
-        <!-- Badge -->
-        <ng-container *ngIf="product.tag">
-          <span
-            class="badge position-absolute mt-2 mx-2 top-0 start-0 z-1"
-            [ngClass]="{
-              'bg-success': product.tag === 'New',
-              'bg-warning text-dark': product.tag === 'Favorite',
-              'bg-danger': product.tag?.includes('-'),
-              'bg-secondary': product.tag === 'Sold Out'
-            }">
-            {{ product.tag }}
-          </span>
-        </ng-container>
+                <!-- Image -->
+                <div class="ratio ratio-1x1 bg-light d-flex align-items-center justify-content-center">
+                  <img *ngIf="product.image" [src]="product.image" class="img-fluid" [alt]="product.name">
+                </div>
 
-        <!-- Image -->
-        <div class="ratio ratio-1x1 bg-light d-flex align-items-center justify-content-center">
-          <img *ngIf="product.image" [src]="product.image" class="img-fluid" [alt]="product.name">
+                <!-- Body -->
+                <div class="card-body px-2 py-3 text-center">
+                  <p class="mb-1 small fw-medium product-title">
+                    {{ product.name }}
+                  </p>
+
+                  <h6 class="fw-bold mb-1">
+                    ${{ product.price }}
+                  </h6>
+
+                  <small class="text-muted">
+                    by {{ product.vendor }}
+                  </small>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      }
+
+    @if(!isSearchText){
+      <div class="container my-5">
+      <!-- Top Promo Cards -->
+      
+      <div class="row mb-5">
+        <div class="col-md-6 mb-3">
+          <div class="p-4 bg-light rounded">
+            <small class="text-muted">Hot Deal</small>
+            <h5 class="fw-bold mt-2">TOURS SAFE</h5>
+            <h5 class="fw-bold">TRUE DISCOUNT</h5>
+            <button class="btn btn-success mt-3 px-4">Order Now</button>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="p-4 bg-light rounded">
+            <small class="text-muted">New Product</small>
+            <h5 class="fw-bold mt-2">EXPERIENCE TECHNOLOGY</h5>
+            <h5 class="fw-bold">RELAX HIGHTLY</h5>
+            <button class="btn btn-success mt-3 px-4">Order Now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Promo Product Section -->
+    <div>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0">Promo Product</h6>
+        <a href="#" class="text-success text-decoration-none small">See All</a>
+      </div>
+
+      <div class="row gx-4">
+
+        <!-- ✅ Product 1: MacBook -->
+        <div class="col-md-6 mb-4">
+          <div class="d-flex bg-white p-3 rounded shadow-sm position-relative h-100">
+
+            <span class="badge bg-danger position-absolute top-0 start-0 m-2">-15%</span>
+
+            <div class="bg-light d-flex justify-content-center align-items-center flex-shrink-0"
+                style="width: 140px; height: 140px;">
+              <span class="text-muted text-center">Image Ratio<br>1:1</span>
+            </div>
+
+            <div class="flex-grow-1 ms-3">
+
+              <h6 class="mb-1">Apple Macbook Air MWTJ2SA/A Space Grey (2020)</h6>
+
+              <div class="mb-1">
+                <span class="fw-bold fs-5">$1,099</span>
+                <small class="text-muted text-decoration-line-through ms-2">$1193.71</small>
+              </div>
+
+              <div class="d-flex align-items-center mt-2">
+                <small class="text-muted me-2">Sold: 700</small>
+
+                <div class="progress flex-grow-1" style="height: 6px;">
+                  <div class="progress-bar bg-success" style="width: 70%;"></div>
+                </div>
+
+                <small class="text-muted ms-2">In Stock: 300</small>
+              </div>
+
+              <div class="d-flex align-items-center gap-1 mt-3">
+                <div class="border rounded px-2 py-1 text-center">
+                  <div class="fw-semibold">123</div>
+                  <small class="text-muted">Day</small>
+                </div>
+                <span>:</span>
+                <div class="border rounded px-2 py-1 text-center">
+                  <div class="fw-semibold">42</div>
+                  <small class="text-muted">Hour</small>
+                </div>
+                <span>:</span>
+                <div class="border rounded px-2 py-1 text-center">
+                  <div class="fw-semibold">00</div>
+                  <small class="text-muted">Min</small>
+                </div>
+                <span>:</span>
+                <div class="border rounded px-2 py-1 text-center">
+                  <div class="fw-semibold">08</div>
+                  <small class="text-muted">Sec</small>
+                </div>
+              </div>
+
+              <button class="btn btn-success w-100 mt-3" (click)="addToCart({
+                  id: 101,
+                  name: 'Apple Macbook Air MWTJ2SA/A Space Grey (2020)',
+                  price: 1099,
+                  oldPrice: 1193.71,
+                  image: '',
+                  vendor: 'Apple',
+                  quantity: 1
+                })">
+                  {{ isInCart(101) ? 'Added to cart' : 'Add To Cart' }}</button>
+            </div>
+          </div>
         </div>
 
-        <!-- Body -->
-        <div class="card-body px-2 py-3 text-center">
-          <p class="mb-1 small fw-medium product-title">
-            {{ product.name }}
-          </p>
+        <!-- ✅ Product 2: Apple Watch -->
+        <div class="col-md-6 mb-4">
+          <div class="d-flex bg-white p-3 rounded shadow-sm position-relative h-100">
 
-          <h6 class="fw-bold mb-1">
-            ${{ product.price }}
-          </h6>
+            <span class="badge bg-danger position-absolute top-0 start-0 m-2">-12%</span>
 
-          <small class="text-muted">
-            by {{ product.vendor }}
-          </small>
+            <div class="bg-light d-flex justify-content-center align-items-center flex-shrink-0"
+                style="width: 140px; height: 140px;">
+              <span class="text-muted text-center">Image Ratio<br>1:1</span>
+            </div>
+
+            <div class="flex-grow-1 ms-3">
+
+              <h6 class="mb-1">Apple Watch Series 5 MWV62VN/A</h6>
+
+              <div class="mb-1">
+                <span class="fw-bold fs-5">$514.51</span>
+                <small class="text-muted text-decoration-line-through ms-2">$530.06</small>
+              </div>
+
+              <div class="d-flex align-items-center mt-2">
+                <small class="text-muted me-2">Sold: 700</small>
+
+                <div class="progress flex-grow-1" style="height: 6px;">
+                  <div class="progress-bar bg-success" style="width: 70%;"></div>
+                </div>
+
+                <small class="text-muted ms-2">In Stock: 300</small>
+              </div>
+
+              <div class="d-flex align-items-center gap-1 mt-3">
+                <div class="border rounded px-2 py-1 text-center">
+                  <div class="fw-semibold">123</div>
+                  <small class="text-muted">Day</small>
+                </div>
+                <span>:</span>
+                <div class="border rounded px-2 py-1 text-center">
+                  <div class="fw-semibold">42</div>
+                  <small class="text-muted">Hour</small>
+                </div>
+                <span>:</span>
+                <div class="border rounded px-2 py-1 text-center">
+                  <div class="fw-semibold">00</div>
+                  <small class="text-muted">Min</small>
+                </div>
+                <span>:</span>
+                <div class="border rounded px-2 py-1 text-center">
+                  <div class="fw-semibold">08</div>
+                  <small class="text-muted">Sec</small>
+                </div>
+              </div>
+
+              <button class="btn btn-success w-100 mt-3" (click)="addToCart({
+                  id: 102,
+                  name: 'Apple Watch Series 5 MWV62VN/A',
+                  price: 514.51,
+                  oldPrice: 530.06,
+                  image: '',
+                  vendor: 'Apple',
+                  quantity: 1
+                })">
+                {{ isInCart(102) ? 'Added to cart' : 'Add To Cart' }}</button>
+            </div>
+          </div>
         </div>
 
       </div>
-
     </div>
-  </div>
 
-</div>}
+    <!-- Hero Banner -->
+    <div class="container-fluid p-0">
+      <div class="d-flex align-items-center justify-content-end"
+          style="height: 420px; background: #e9ecef;">
 
-</div>
+        <!-- Content -->
+        <div class="text-end pe-5">
 
-@if(!isSearchText){
-  <div class="container my-5">
-  <!-- Top Promo Cards -->
-   
-  <div class="row mb-5">
-    <div class="col-md-6 mb-3">
-      <div class="p-4 bg-light rounded">
-        <small class="text-muted">Hot Deal</small>
-        <h5 class="fw-bold mt-2">TOURS SAFE</h5>
-        <h5 class="fw-bold">TRUE DISCOUNT</h5>
-        <button class="btn btn-success mt-3 px-4">Order Now</button>
-      </div>
-    </div>
-    <div class="col-md-6 mb-3">
-      <div class="p-4 bg-light rounded">
-        <small class="text-muted">New Product</small>
-        <h5 class="fw-bold mt-2">EXPERIENCE TECHNOLOGY</h5>
-        <h5 class="fw-bold">RELAX HIGHTLY</h5>
-        <button class="btn btn-success mt-3 px-4">Order Now</button>
-      </div>
-    </div>
-  </div>
+          <p class="mb-2 text-muted">New Product</p>
 
-  <!-- Promo Product Section -->
-<div>
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h6 class="fw-bold mb-0">Promo Product</h6>
-    <a href="#" class="text-success text-decoration-none small">See All</a>
-  </div>
+          <h1 class="fw-bold mb-2" style="font-size: 38px; letter-spacing: 1px;">
+            FASHIONABLE WALLETS
+          </h1>
 
-  <div class="row gx-4">
+          <h4 class="fw-semibold mb-4 text-secondary" style="letter-spacing: 1px;">
+            BIG GOOD SALE FOR HER
+          </h4>
 
-    <!-- ✅ Product 1: MacBook -->
-    <div class="col-md-6 mb-4">
-      <div class="d-flex bg-white p-3 rounded shadow-sm position-relative h-100">
+          <button class="btn btn-success px-4 py-2 fw-semibold">
+            Order Now
+          </button>
 
-        <span class="badge bg-danger position-absolute top-0 start-0 m-2">-15%</span>
-
-        <div class="bg-light d-flex justify-content-center align-items-center flex-shrink-0"
-             style="width: 140px; height: 140px;">
-          <span class="text-muted text-center">Image Ratio<br>1:1</span>
         </div>
 
-        <div class="flex-grow-1 ms-3">
-
-          <h6 class="mb-1">Apple Macbook Air MWTJ2SA/A Space Grey (2020)</h6>
-
-          <div class="mb-1">
-            <span class="fw-bold fs-5">$1,099</span>
-            <small class="text-muted text-decoration-line-through ms-2">$1193.71</small>
-          </div>
-
-          <div class="d-flex align-items-center mt-2">
-            <small class="text-muted me-2">Sold: 700</small>
-
-            <div class="progress flex-grow-1" style="height: 6px;">
-              <div class="progress-bar bg-success" style="width: 70%;"></div>
-            </div>
-
-            <small class="text-muted ms-2">In Stock: 300</small>
-          </div>
-
-          <div class="d-flex align-items-center gap-1 mt-3">
-            <div class="border rounded px-2 py-1 text-center">
-              <div class="fw-semibold">123</div>
-              <small class="text-muted">Day</small>
-            </div>
-            <span>:</span>
-            <div class="border rounded px-2 py-1 text-center">
-              <div class="fw-semibold">42</div>
-              <small class="text-muted">Hour</small>
-            </div>
-            <span>:</span>
-            <div class="border rounded px-2 py-1 text-center">
-              <div class="fw-semibold">00</div>
-              <small class="text-muted">Min</small>
-            </div>
-            <span>:</span>
-            <div class="border rounded px-2 py-1 text-center">
-              <div class="fw-semibold">08</div>
-              <small class="text-muted">Sec</small>
-            </div>
-          </div>
-
-          <button class="btn btn-success w-100 mt-3" (click)="addToCart({
-              id: 101,
-              name: 'Apple Macbook Air MWTJ2SA/A Space Grey (2020)',
-              price: 1099,
-              oldPrice: 1193.71,
-              image: '',
-              vendor: 'Apple',
-              quantity: 1
-            })">
-              {{ isInCart(101) ? 'Added to cart' : 'Add To Cart' }}</button>
-        </div>
       </div>
     </div>
-
-    <!-- ✅ Product 2: Apple Watch -->
-    <div class="col-md-6 mb-4">
-      <div class="d-flex bg-white p-3 rounded shadow-sm position-relative h-100">
-
-        <span class="badge bg-danger position-absolute top-0 start-0 m-2">-12%</span>
-
-        <div class="bg-light d-flex justify-content-center align-items-center flex-shrink-0"
-             style="width: 140px; height: 140px;">
-          <span class="text-muted text-center">Image Ratio<br>1:1</span>
-        </div>
-
-        <div class="flex-grow-1 ms-3">
-
-          <h6 class="mb-1">Apple Watch Series 5 MWV62VN/A</h6>
-
-          <div class="mb-1">
-            <span class="fw-bold fs-5">$514.51</span>
-            <small class="text-muted text-decoration-line-through ms-2">$530.06</small>
-          </div>
-
-          <div class="d-flex align-items-center mt-2">
-            <small class="text-muted me-2">Sold: 700</small>
-
-            <div class="progress flex-grow-1" style="height: 6px;">
-              <div class="progress-bar bg-success" style="width: 70%;"></div>
-            </div>
-
-            <small class="text-muted ms-2">In Stock: 300</small>
-          </div>
-
-          <div class="d-flex align-items-center gap-1 mt-3">
-            <div class="border rounded px-2 py-1 text-center">
-              <div class="fw-semibold">123</div>
-              <small class="text-muted">Day</small>
-            </div>
-            <span>:</span>
-            <div class="border rounded px-2 py-1 text-center">
-              <div class="fw-semibold">42</div>
-              <small class="text-muted">Hour</small>
-            </div>
-            <span>:</span>
-            <div class="border rounded px-2 py-1 text-center">
-              <div class="fw-semibold">00</div>
-              <small class="text-muted">Min</small>
-            </div>
-            <span>:</span>
-            <div class="border rounded px-2 py-1 text-center">
-              <div class="fw-semibold">08</div>
-              <small class="text-muted">Sec</small>
-            </div>
-          </div>
-
-          <button class="btn btn-success w-100 mt-3" (click)="addToCart({
-              id: 102,
-              name: 'Apple Watch Series 5 MWV62VN/A',
-              price: 514.51,
-              oldPrice: 530.06,
-              image: '',
-              vendor: 'Apple',
-              quantity: 1
-            })">
-            {{ isInCart(102) ? 'Added' : 'Add To Cart' }}</button>
-        </div>
       </div>
-    </div>
+    }
 
-  </div>
-</div>
-
-<!-- Hero Banner -->
-<div class="container-fluid p-0">
-  <div class="d-flex align-items-center justify-content-end"
-       style="height: 420px; background: #e9ecef;">
-
-    <!-- Content -->
-    <div class="text-end pe-5">
-
-      <p class="mb-2 text-muted">New Product</p>
-
-      <h1 class="fw-bold mb-2" style="font-size: 38px; letter-spacing: 1px;">
-        FASHIONABLE WALLETS
-      </h1>
-
-      <h4 class="fw-semibold mb-4 text-secondary" style="letter-spacing: 1px;">
-        BIG GOOD SALE FOR HER
-      </h4>
-
-      <button class="btn btn-success px-4 py-2 fw-semibold">
-        Order Now
-      </button>
-
-    </div>
-
-  </div>
-</div>
-   
-</div>
-   }
-
-<div class="container mt-4">
+    <div class="container mt-4">
       <!-- CATEGORY LOOP -->
-<div *ngFor="let category of categories" class="mb-5">
+      <div *ngFor="let category of categories" class="mb-5">
 
-  <!-- Header -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4>{{ category.name }}</h4>
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4>{{ category.name }}</h4>
 
-    <!-- Filters -->
-    <div class="small">
-      <span 
-        *ngFor="let filter of category.filters"
-        class="me-3 cursor-pointer"
-        [ngClass]="{
-          'text-success fw-bold': category.selectedFilter === filter,
-          'text-muted': category.selectedFilter !== filter
-        }"
-        (click)="setFilter(category, filter)"
-      >
-        {{ filter | titlecase }}
-      </span>
-    </div>
-  </div>
-
-  <!-- GRID -->
-  <div class="row">
-
-    <div *ngFor="let item of getFilteredItems(category)" class="mb-4"
-     [ngClass]="{
-       'col-md-4 col-sm-6': category.name === 'Technology',
-       'col-md-2 col-sm-4': category.name !== 'Technology'
-     }">
-
-      <!-- CARD -->
-      <div class="card product-card border-0"
-           [ngClass]="{ 'tech-card d-flex flex-row': category.name === 'Technology' }">
-
-        <!-- IMAGE -->
-        <div class="position-relative image-wrapper"
-             [ngClass]="{ 'tech-image': category.name === 'Technology' }">
-
-          <img [src]="item.image" class="card-img-top rounded" />
-
-          <!-- TAG -->
-          <span *ngIf="item.tag"
-            class="badge position-absolute top-0 start-0 m-2"
-            [ngClass]="{
-              'bg-success': item.tag === 'New',
-              'bg-warning text-dark': item.tag === 'Favorite',
-              'bg-secondary': item.tag === 'Sold Out',
-              'bg-danger': item.tag?.includes('-')
-            }">
-            {{ item.tag }}
-          </span>
-
-          <!-- DEFAULT OVERLAY -->
-          <div class="overlay" *ngIf="category.name !== 'Technology'">
-            <button 
-              *ngIf="!isInCart(item)" 
-              class="btn btn-dark btn-sm"
-              (click)="addToCart(item)">
-              Add to Cart
-            </button>
-
-            <button 
-              *ngIf="isInCart(item)" 
-              class="btn btn-success btn-sm"
-              disabled>
-              Added ✔
-            </button>
+          <!-- Filters -->
+          <div class="small">
+            <span 
+              *ngFor="let filter of category.filters"
+              class="me-3 cursor-pointer"
+              [ngClass]="{
+                'text-success fw-bold': category.selectedFilter === filter,
+                'text-muted': category.selectedFilter !== filter
+              }"
+              (click)="setFilter(category, filter)"
+            >
+              {{ filter | titlecase }}
+            </span>
           </div>
-
-          <!-- TECHNOLOGY OVERLAY -->
-          <div class="tech-overlay" *ngIf="category.name === 'Technology'">
-
-            <div class="tech-icons">
-              <button class="icon-btn">
-                <i class="bi bi-heart"></i>
-              </button>
-              <button class="icon-btn">
-                <i class="bi bi-eye"></i>
-              </button>
-            </div>
-
-            <button 
-              *ngIf="!isInCart(item)" 
-              class="btn btn-success btn-sm"
-              (click)="addToCart(item)">
-              Add To Cart
-            </button>
-
-          </div>
-
         </div>
 
-        <!-- CONTENT -->
-        <div class="card-body p-2"
-             [ngClass]="{ 'tech-content': category.name === 'Technology' }">
+        <!-- GRID -->
+        <div class="row">
 
-          <p class="mb-1 small">{{ item.name }}</p>
+          <div *ngFor="let item of getFilteredItems(category)" class="mb-4"
+          [ngClass]="{
+            'col-md-4 col-sm-6': category.name === 'Technology',
+            'col-md-2 col-sm-4': category.name !== 'Technology'
+          }">
 
-          <h6 class="mb-1 fw-bold">
-            ${{ item.price }}
-            <small *ngIf="item.oldPrice" class="text-muted text-decoration-line-through ms-2">
-              ${{ item.oldPrice }}
-            </small>
-          </h6>
+            <!-- CARD -->
+            <div class="card product-card border-0"
+                [ngClass]="{ 'tech-card d-flex flex-row': category.name === 'Technology' }">
 
-          <p class="text-muted small mb-0">
-            by <span class="text-primary">{{ item.vendor }}</span>
-          </p>
+              <!-- IMAGE -->
+              <div class="position-relative image-wrapper"
+                  [ngClass]="{ 'tech-image': category.name === 'Technology' }">
+
+                <img [src]="item.image" class="card-img-top rounded" />
+
+                <!-- TAG -->
+                <span *ngIf="item.tag"
+                  class="badge position-absolute top-0 start-0 m-2"
+                  [ngClass]="{
+                    'bg-success': item.tag === 'New',
+                    'bg-warning text-dark': item.tag === 'Favorite',
+                    'bg-secondary': item.tag === 'Sold Out',
+                    'bg-danger': item.tag?.includes('-')
+                  }">
+                  {{ item.tag }}
+                </span>
+
+                <!-- DEFAULT OVERLAY -->
+                <div class="overlay" *ngIf="category.name !== 'Technology'">
+                  <button 
+                    *ngIf="!isInCart(item)" 
+                    class="btn btn-dark btn-sm"
+                    (click)="addToCart(item)">
+                    Add to Cart
+                  </button>
+
+                  <button 
+                    *ngIf="isInCart(item)" 
+                    class="btn btn-success btn-sm"
+                    disabled>
+                    Added ✔
+                  </button>
+                </div>
+
+                <!-- TECHNOLOGY OVERLAY -->
+                <div class="tech-overlay" *ngIf="category.name === 'Technology'">
+
+                  <div class="tech-icons">
+                    <button class="icon-btn">
+                      <i class="bi bi-heart"></i>
+                    </button>
+                    <button class="icon-btn">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+
+                  <button 
+                    *ngIf="!isInCart(item)" 
+                    class="btn btn-success btn-sm"
+                    (click)="addToCart(item)">
+                    Add To Cart
+                  </button>
+
+                </div>
+
+              </div>
+
+              <!-- CONTENT -->
+              <div class="card-body p-2"
+                  [ngClass]="{ 'tech-content': category.name === 'Technology' }">
+
+                <p class="mb-1 small">{{ item.name }}</p>
+
+                <h6 class="mb-1 fw-bold">
+                  ${{ item.price }}
+                  <small *ngIf="item.oldPrice" class="text-muted text-decoration-line-through ms-2">
+                    ${{ item.oldPrice }}
+                  </small>
+                </h6>
+
+                <p class="text-muted small mb-0">
+                  by <span class="text-primary">{{ item.vendor }}</span>
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 
       </div>
-
-    </div>
-
-  </div>
-
-</div>
-@if(isSearchText && categories.length==0){
-  <div class="text-center py-5">
-    <h4 class="fw-bold mb-3">No results found for "{{ searchText }}"</h4>
-    <p class="text-muted">Try adjusting your search or filter to find what you're looking for.</p>
-  </div>
-
-}
-
+      @if(isSearchText && categories.length==0){
+        <div class="text-center py-5">
+          <h4 class="fw-bold mb-3">No results found for "{{ searchText }}"</h4>
+          <p class="text-muted">Try adjusting your search or filter to find what you're looking for.</p>
+        </div>
+      }
     </div>
 
     <div class="container my-5">
-  <div class="row text-center">
+      <div class="row text-center">
 
-    <!-- Free Shipping -->
-    <div class="col-md-4 mb-3">
-      <div class="feature-box p-4 h-100">
-        <div class="icon mb-3">
-          <i class="bi bi-truck"></i>
+        <!-- Free Shipping -->
+        <div class="col-md-4 mb-3">
+          <div class="feature-box p-4 h-100">
+            <div class="icon mb-3">
+              <i class="bi bi-truck"></i>
+            </div>
+            <h6 class="fw-bold">Free Shipping</h6>
+            <p class="text-muted small mb-0">
+              For invoices <br> over $1,500
+            </p>
+          </div>
         </div>
-        <h6 class="fw-bold">Free Shipping</h6>
-        <p class="text-muted small mb-0">
-          For invoices <br> over $1,500
-        </p>
+
+        <!-- Cash Back -->
+        <div class="col-md-4 mb-3">
+          <div class="feature-box p-4 h-100">
+            <div class="icon mb-3">
+              <i class="bi bi-cash"></i>
+            </div>
+            <h6 class="fw-bold">Cash Back</h6>
+            <p class="text-muted small mb-0">
+              When paying for products <br> via Dasun Wallet
+            </p>
+          </div>
+        </div>
+
+        <!-- Support -->
+        <div class="col-md-4 mb-3">
+          <div class="feature-box p-4 h-100">
+            <div class="icon mb-3">
+              <i class="bi bi-headset"></i>
+            </div>
+            <h6 class="fw-bold">24/7 Support</h6>
+            <p class="text-muted small mb-0">
+              When something goes <br> wrong
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <!-- Cash Back -->
-    <div class="col-md-4 mb-3">
-      <div class="feature-box p-4 h-100">
-        <div class="icon mb-3">
-          <i class="bi bi-cash"></i>
-        </div>
-        <h6 class="fw-bold">Cash Back</h6>
-        <p class="text-muted small mb-0">
-          When paying for products <br> via Dasun Wallet
-        </p>
-      </div>
-    </div>
-
-    <!-- Support -->
-    <div class="col-md-4 mb-3">
-      <div class="feature-box p-4 h-100">
-        <div class="icon mb-3">
-          <i class="bi bi-headset"></i>
-        </div>
-        <h6 class="fw-bold">24/7 Support</h6>
-        <p class="text-muted small mb-0">
-          When something goes <br> wrong
-        </p>
-      </div>
-    </div>
-
   </div>
 </div>
-</div>
-</div>
 
-<footer class="footer bg-dark text-light pt-5 pb-4">
-  <div class="container">
-    <div class="row">
-
-      <!-- Contact -->
-      <div class="col-md-3 mb-4">
-        <h6 class="fw-bold mb-3">Contact</h6>
-        <p class="small mb-2">ftribe Co., Ltd</p>
-
-        <p class="small mb-2">
-          <i class="bi bi-geo-alt me-2"></i>
-          1658 Rosewood Lane <br>
-          New York city, NY
-        </p>
-
-        <p class="small mb-2 text-success">
-          <i class="bi bi-telephone me-2"></i>
-          212 929 9953
-        </p>
-
-        <p class="small text-success">
-          <i class="bi bi-envelope me-2"></i>
-          admin&#64;ftribe.com
-        </p>
-      </div>
-
-      <!-- Cooperation -->
-      <div class="col-md-3 mb-4">
-        <h6 class="fw-bold mb-3">Cooperation - Association</h6>
-        <ul class="list-unstyled small">
-          <li class="mb-2">Operation Regulation of EC-Exchange</li>
-          <li class="mb-2">Return Policy</li>
-          <li class="mb-2">Privacy Policy</li>
-          <li class="mb-2">Selling With ftribe</li>
-        </ul>
-      </div>
-
-      <!-- Customer Support -->
-      <div class="col-md-3 mb-4">
-        <h6 class="fw-bold mb-3">Customer Support</h6>
-        <ul class="list-unstyled small">
-          <li class="mb-2">
-            Hotline Customer Service <br>
-            <span class="text-success">212 929 9953</span>
-          </li>
-          <li class="mb-2">Frequently asked Questions</li>
-          <li class="mb-2">Submit Support Request</li>
-          <li class="mb-2">Ordering Guide</li>
-          <li class="mb-2">Shipping Methods</li>
-        </ul>
-      </div>
-
-      <!-- Extra Links -->
-      <div class="col-md-3 mb-4">
-        <ul class="list-unstyled small mt-4">
-          <li class="mb-2">Installment Purchase Guide</li>
-          <li class="mb-2">Import Policy</li>
-          <li class="mb-2">
-            Customer Support: <br>
-            <span class="text-success">customer&#64;ftribe.com</span>
-          </li>
-          <li class="mb-2">
-            Security Error Report: <br>
-            <span class="text-success">admin&#64;ftribe.com</span>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</footer>
