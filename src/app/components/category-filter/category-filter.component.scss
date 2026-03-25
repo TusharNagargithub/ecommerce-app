@@ -1,0 +1,302 @@
+.custom-indicators {
+  justify-content: flex-end;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.custom-indicators button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #999;
+}
+
+.custom-indicators .active {
+  background-color: #333;
+}
+
+
+
+// ##################################
+
+.category-card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 20px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.category-card.active {
+  border: 2px solid #4caf50;
+  background: #eef7ee;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  background: #ddd;
+  border-radius: 50%;
+}
+
+
+.z-index-1 {
+    z-index: 1;
+}
+
+
+.product-card {
+  cursor: pointer;
+}
+
+/* Image */
+.product-card img {
+  height: 150px;
+  object-fit: cover;
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  transition: 0.3s;
+  border-radius: 6px;
+}
+
+.product-card:hover .overlay {
+  opacity: 1;
+}
+
+/* Slight hover effect */
+.product-card:hover img {
+  opacity: 0.3;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+  padding-bottom: 2px;
+}
+
+.cursor-pointer:hover {
+  border-bottom: 2px solid #198754;
+}
+
+
+.feature-box {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background: #fff;
+  transition: 0.3s;
+}
+
+.feature-box:hover {
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.icon i {
+  font-size: 28px;
+  color: #6c757d;
+}
+.icon {
+  background: #f8f9fa;
+}
+
+
+
+.footer {
+  background: #000;
+}
+
+.footer h6 {
+  font-size: 14px;
+}
+
+.footer p,
+.footer li {
+  color: #bbb;
+}
+
+.footer li:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+.text-success {
+  color: #28a745 !important;
+}
+
+// .category-card {
+//   padding: 15px;
+//   border: 1px solid #eee;
+//   border-radius: 8px;
+//   cursor: pointer;
+//   transition: 0.3s;
+// }
+
+// .category-card.active {
+//   border-color: #198754;
+//   background: #f0fdf4;
+// }
+
+// .category-card:hover {
+//   border-color: #198754;
+// }
+
+.category-card {
+  background: #fff;
+  border: 1px solid #ececec;
+  border-radius: 14px;
+  padding: 28px 15px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  min-height: 138px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.category-card:hover {
+  border-color: #8ddc63;
+  transform: translateY(-2px);
+}
+
+.category-card.active {
+  border: 1.5px solid #8ddc63;
+  background: #f5fbef;
+  position: relative;
+}
+
+.category-card.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 14px;
+  height: 14px;
+  background: #f5fbef;
+  border-right: 1.5px solid #8ddc63;
+  border-bottom: 1.5px solid #8ddc63;
+}
+
+.icon-wrapper {
+  font-size: 34px;
+  color: #555;
+  line-height: 1;
+}
+
+.category-card.active .icon-wrapper {
+  color: #7ed957;
+}
+
+.category-card p {
+  font-size: 18px;
+  color: #111;
+}
+
+
+/* IMAGE WRAPPER */
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+/* DEFAULT OVERLAY */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.product-card:hover .overlay {
+  opacity: 1;
+}
+
+/* TECHNOLOGY CARD LAYOUT */
+.tech-card {
+  align-items: center;
+  padding: 10px;
+}
+
+/* LEFT IMAGE */
+.tech-image {
+  width: 120px;
+  min-width: 120px;
+}
+
+.tech-image img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+}
+
+/* RIGHT CONTENT */
+.tech-content {
+  flex: 1;
+  padding-left: 15px;
+}
+
+/* TECHNOLOGY OVERLAY */
+.tech-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  background: rgba(255,255,255,0.95);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.tech-card:hover .tech-overlay {
+  opacity: 1;
+}
+
+/* ICONS */
+.tech-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-btn {
+  background: black;
+  color: #00ff88;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+}
+
+.icon-btn i {
+  font-size: 16px;
+}
+
+/* BUTTON */
+.tech-overlay .btn {
+  width: 130px;
+  border-radius: 6px;
+}

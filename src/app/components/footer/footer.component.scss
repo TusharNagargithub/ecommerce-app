@@ -1,0 +1,103 @@
+.custom-card {
+  background: #f5f5f5;
+  border: none;
+  border-radius: 16px;
+  padding: 22px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.left-banner {
+  min-height: 455px;
+  padding: 40px 20px;
+}
+
+.hero-carousel {
+  min-height: 295px;
+  position: relative;
+}
+
+.side-card {
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bottom-card {
+  min-height: 135px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.carousel-controls {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  z-index: 5;
+  display: flex;
+  gap: 8px;
+}
+
+.carousel-controls .btn {
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  padding: 0;
+  box-shadow: none;
+}
+
+.custom-indicators {
+  justify-content: flex-end;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.custom-indicators [data-bs-target] {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ddd;
+  border: none;
+  opacity: 1;
+}
+
+.custom-indicators .active {
+  background-color: #fff;
+}
+
+.btn-success {
+  background-color: #69d12f;
+  border-color: #69d12f;
+}
+
+.btn-success:hover {
+  background-color: #58b626;
+  border-color: #58b626;
+}
+
+@media (max-width: 991px) {
+  .left-banner {
+    min-height: auto;
+  }
+
+  .hero-carousel {
+    min-height: auto;
+  }
+
+  .side-card,
+  .bottom-card {
+    min-height: auto;
+  }
+}
+
+.container {
+  max-width: 100%;
+  margin: auto;
+}
+
+.margin-left {
+  margin-left: 45px;
+}

@@ -1,0 +1,136 @@
+<!-- ================= TOP BLACK BAR ================= -->
+<div class="bg-black text-white py-2 border-bottom border-secondary-subtle">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap">
+
+    <!-- Social Icons -->
+    <div class="d-flex align-items-center gap-3 small">
+      <i class="bi bi-facebook"></i>
+      <i class="bi bi-linkedin"></i>
+      <i class="bi bi-twitter"></i>
+      <i class="bi bi-envelope"></i>
+    </div>
+
+    <!-- Top Links -->
+    <div class="d-flex align-items-center gap-2 small top-links flex-wrap justify-content-center">
+      <span>Introduce</span>
+      <span>•</span>
+      <span>Partner Incentives</span>
+      <span>•</span>
+      <span>Promotion</span>
+      <span>•</span>
+      <span>Contact</span>
+      <span>•</span>
+      <span>Frequently asked questions</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= MAIN HEADER ================= -->
+<div class="bg-black text-white py-4">
+  <div class="container">
+    <div class="row align-items-center gy-3">
+
+      <!-- Logo -->
+      <div class="col-lg-3 col-md-12 text-center text-lg-start">
+        <h3 class="fw-bold mb-0 logo-text">Exclusive</h3>
+      </div>
+
+      <!-- Search -->
+      <div class="col-lg-6 col-md-12">
+        <div class="search-wrapper d-flex align-items-center">
+
+          <!-- Search Input -->
+          <input
+            type="text"
+            class="form-control border-0 rounded-0 search-input"
+            [(ngModel)]="searchText"
+            placeholder="What are you looking for?"
+          />
+
+          <!-- Category Dropdown -->
+          <select class="form-select border-0 rounded-0 category-select" [(ngModel)]="selectedCategory" >
+            <option value="">Category</option>
+            
+          </select>
+
+          <!-- Search Button -->
+          <button class="btn search-btn px-4 fw-semibold" (click)="onSearch()">
+            Search
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Icons -->
+      <div class="col-lg-3 col-md-12">
+        <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-4 header-icons">
+
+          <!-- Wishlist -->
+          <div class="icon-circle">
+            <i class="bi bi-heart"></i>
+          </div>
+
+          <!-- Cart -->
+          <div class="position-relative icon-circle">
+            <i class="bi bi-cart3"></i>
+            <span class="cart-badge">{{ cartCount }}</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="bg-light border-top border-bottom mb-4">
+  <div class="container">
+    <div class="row align-items-center py-3">
+
+      <!-- Left Category -->
+      <div class="col-lg-3 d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
+        <div class="d-flex align-items-center gap-2 nav-hover cursor-pointer">
+          <i class="bi bi-list-ul"></i>
+          <span class="fw-medium small">Category</span>
+          <i class="bi bi-chevron-down small"></i>
+        </div>
+      </div>
+
+      <!-- Center Nav -->
+      <div class="col-lg-6">
+        <div class="d-flex justify-content-center align-items-center gap-4 flex-wrap nav-center">
+          <span class="nav-link-custom active-link">Home</span>
+
+          <div class="d-flex align-items-center gap-1 nav-link-custom">
+            <span>New Product</span>
+            <i class="bi bi-chevron-down small"></i>
+          </div>
+
+          <div class="d-flex align-items-center gap-2 nav-link-custom">
+            <span>Promotion</span>
+            <span class="badge hot-badge">HOT</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Nav -->
+      <div class="col-lg-3">
+        <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-4 flex-wrap">
+
+          <div class="d-flex align-items-center gap-2 nav-link-custom">
+            <i class="bi bi-truck"></i>
+            <span>Track Your Order</span>
+          </div>
+
+          <div class="d-flex align-items-center gap-2 nav-link-custom">
+            <i class="bi bi-person"></i>
+            <span>Sign In/Register</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</nav>
