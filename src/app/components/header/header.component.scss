@@ -279,6 +279,12 @@ body {
   font-weight: 600;
 }
 
+@media (max-width: 991px) {
+  .search-wrapper {
+    display: none; /* hide big search on mobile */
+  }
+}
+
 /* ================= NAV ================= */
 .nav-link-custom {
   font-size: 14px;

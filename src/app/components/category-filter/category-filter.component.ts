@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product.service';
+import { BaseComponent } from '../../base-component/base.component';
+import { FormsModule } from '@angular/forms';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-category-filter',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './category-filter.component.html',
   styleUrl: './category-filter.component.scss'
 })
-export class CategoryFilterComponent {
+export class CategoryFilterComponent extends BaseComponent implements OnDestroy {
 
   public categories: any[] = [];
   public cart: any[] = [];
@@ -17,45 +20,83 @@ export class CategoryFilterComponent {
   public searchText: string = '';
   public allCategories: any[] = [];
   public isSearchText: boolean = false;
+  public isMobileOrTablet = false;
+
+  public filteredCategory: string = '';
 
   constructor(private productService: ProductService) {
+    super();
     this.categories = this.productService.allCategoryProduct;
   }
 
   ngOnInit(): void {
     this.loadCart();
+    this.checkScreen();
     this.allCategories = this.categories;
 
-    this.productService.searchText$.subscribe(search => {
+    this.productService.searchText$.pipe(takeUntil(this.destroy$)).subscribe(search => {
       this.searchText = search;
       this.isSearchText = search.length > 0;
-      if (!search) {
-        this.categories = JSON.parse(JSON.stringify(this.allCategories));
-        return;
-      }
-      const searchLower = search.toLowerCase();
-      this.categories = this.allCategories
-        .map((category: { items: any[]; }) => {
-          const filteredItems = category.items.filter(item =>
+      this.applyFilters();
+    });  
+
+    this.productService.category$.pipe(takeUntil(this.destroy$)).subscribe(cat => {
+      this.filteredCategory = cat;
+      this.applyFilters();
+    });
+
+    window.addEventListener('resize', () => this.checkScreen());
+  }
+
+  public checkScreen() {
+    this.isMobileOrTablet = window.innerWidth < 992;
+  }
+
+  private applyFilters(): void {
+    let filtered = structuredClone(this.allCategories);
+
+    if (this.filteredCategory && this.filteredCategory !== 'All') {
+      filtered = filtered.filter(
+        (c: any) =>
+          c.name.toLowerCase() === this.filteredCategory.toLowerCase()
+      );
+    }
+
+    if (this.searchText) {
+      const searchLower = this.searchText.toLowerCase();
+
+      filtered = filtered
+        .map((category: any) => {
+          const items = category.items.filter((item: any) =>
             item.name.toLowerCase().includes(searchLower)
           );
 
-          return {
-            ...category,
-            items: filteredItems
-          };
+          return { ...category, items };
         })
-        .filter((category: { items: any[]; }) => category.items.length > 0);
-    });  
+        .filter((category: any) => category.items.length > 0);
+    }
+
+    this.categories = filtered;
   }
 
-  public setCategory(cat: string): void {
-    this.selectedCategory = cat;
+  public setCategory(event: any): void {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.selectedCategory = selectedValue ?? event;
   }
+
+  public chunkProducts(products: any[], chunkSize: number = 2) {
+    const result = [];
+    for (let i = 0; i < products.length; i += chunkSize) {
+      result.push(products.slice(i, i + chunkSize));
+    }
+    return result;
+  }
+
+  
 
   public getSelectedCategoryData(): any {
     return this.categories.find(
-      c => c.name.toLowerCase() === this.selectedCategory.toLowerCase()
+      c => c.name.toLowerCase() === this.selectedCategory?.toLowerCase()
     );
   }
 
@@ -87,5 +128,9 @@ export class CategoryFilterComponent {
     return category.items.filter(
       (item: any) => item.type === category.selectedFilter
     );
+  }
+
+   public override ngOnDestroy(): void {
+    super.ngOnDestroy();
   }
 }

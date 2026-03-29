@@ -1,5 +1,5 @@
 <!-- ================= TOP BLACK BAR ================= -->
-<div class="bg-black text-white py-2 border-bottom border-secondary-subtle">
+<div class="bg-black text-white py-2 border-bottom border-secondary-subtle d-none d-md-flex">
   <div class="container d-flex justify-content-between align-items-center flex-wrap">
 
     <!-- Social Icons -->
@@ -27,55 +27,68 @@
 </div>
 
 <!-- ================= MAIN HEADER ================= -->
-<div class="bg-black text-white py-4">
+<div class="bg-black text-white py-3">
   <div class="container">
-    <div class="row align-items-center gy-3">
+
+    <!-- MOBILE HEADER -->
+    <div class="d-flex d-lg-none justify-content-between align-items-center">
+
+      <!-- Hamburger -->
+      <i class="bi bi-list fs-3"></i>
 
       <!-- Logo -->
-      <div class="col-lg-3 col-md-12 text-center text-lg-start">
-        <h3 class="fw-bold mb-0 logo-text">Exclusive</h3>
+      <h5 class="mb-0 fw-bold">Exclusive</h5>
+
+      <!-- Icons -->
+      <div class="d-flex align-items-center gap-3">
+        <i class="bi bi-search"></i>
+        <i class="bi bi-heart"></i>
+        <div class="position-relative">
+          <i class="bi bi-cart3"></i>
+          <span class="cart-badge">{{ cartCount }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESKTOP HEADER -->
+    <div class="row align-items-center d-none d-lg-flex gy-3">
+
+      <!-- Logo -->
+      <div class="col-lg-3">
+        <h3 class="fw-bold mb-0">Exclusive</h3>
       </div>
 
       <!-- Search -->
-      <div class="col-lg-6 col-md-12">
-        <div class="search-wrapper d-flex align-items-center">
-
-          <!-- Search Input -->
-          <input
-            type="text"
-            class="form-control border-0 rounded-0 search-input"
+      <div class="col-lg-6">
+        <div class="d-flex">
+          <div class="input-group">
+          <input type="text"
+            class="form-control border-0"
             [(ngModel)]="searchText"
-            placeholder="What are you looking for?"
-          />
+            placeholder="What are you looking for?" />
 
-          <!-- Category Dropdown -->
-          <select class="form-select border-0 rounded-0 category-select" [(ngModel)]="selectedCategory" >
+          <select class="form-select-sm bg-body-secondary" [(ngModel)]="selectedCategory">
             <option value="">Category</option>
-            
+            <option value="Technology">Technology</option>
+            <option value="Watch">Watch</option>
+            <option value="Cosmetics">Cosmetics</option>
+            <option value="Real Estate">Real Estate</option>
+            <option value="Luxury Food">Luxury Food</option>
           </select>
+          </div>
 
-          <!-- Search Button -->
-          <button class="btn search-btn px-4 fw-semibold" (click)="onSearch()">
+          <button class="btn btn-success px-4 mx-2" (click)="onSearch()">
             Search
           </button>
         </div>
       </div>
 
-      <!-- Right Icons -->
-      <div class="col-lg-3 col-md-12">
-        <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-4 header-icons">
-
-          <!-- Wishlist -->
-          <div class="icon-circle">
-            <i class="bi bi-heart"></i>
-          </div>
-
-          <!-- Cart -->
-          <div class="position-relative icon-circle">
-            <i class="bi bi-cart3"></i>
-            <span class="cart-badge">{{ cartCount }}</span>
-          </div>
-
+      <!-- Icons -->
+      <div class="col-lg-3 text-end">
+        <i class="bi bi-heart me-3"></i>
+        <div class="d-inline-block position-relative">
+          <i class="bi bi-cart3"></i>
+          <span class="cart-badge">{{ cartCount }}</span>
         </div>
       </div>
 
@@ -84,7 +97,7 @@
 </div>
 
 <!-- ================= BOTTOM NAV ================= -->
-<nav class="bg-light border-top border-bottom mb-4">
+<nav class="bg-light border-top border-bottom mb-4 d-none d-lg-flex">
   <div class="container">
     <div class="row align-items-center py-3">
 

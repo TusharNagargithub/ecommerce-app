@@ -1,12 +1,172 @@
 <div class="container py-4">
 
-@if(!isSearchText){
+  <ng-template #productCard let-product>
+    <div class="product-wrapper">
+
+      <div class="card product-card h-100 border-0">
+
+        <!-- Image -->
+        <div class="product-img">
+          <img [src]="product.image" class="img-fluid">
+        </div>
+
+        <!-- Content -->
+        <div class="card-body text-center p-2">
+          <p class="small mb-1">{{ product.name }}</p>
+          <h6 class="fw-bold mb-1">${{ product.price }}</h6>
+          <small class="text-muted">{{ product.vendor }}</small>
+        </div>
+
+      </div>
+
+    </div>
+</ng-template>
+
+<ng-template #filterList let-category>
+  <ng-container *ngIf="!isMobileOrTablet; else mobileFilter">
+    <!-- Desktop: show as span links -->
+    <div class="small">
+      <span 
+        *ngFor="let filter of category.filters"
+        class="me-3 cursor-pointer"
+        [ngClass]="{
+          'text-success fw-bold': category.selectedFilter === filter,
+          'text-muted': category.selectedFilter !== filter
+        }"
+        (click)="setFilter(category, filter)">
+        {{ filter | titlecase }}
+      </span>
+    </div>
+  </ng-container>
+
+  <!-- Mobile / Tablet: show as select -->
+  <ng-template #mobileFilter>
+    
+      <select class="form-select"
+          [(ngModel)]="category.selectedFilter"
+          (ngModelChange)="setFilter(category, $event)">
+        <option *ngFor="let filter of category.filters" [value]="filter">
+          {{ filter | titlecase }}
+        </option>
+      </select>
+   
+  </ng-template>
+</ng-template>
+
+<ng-template #productCard1 let-item="item" let-category="category">
+  <div class="card product-card border-0"
+       [ngClass]="{ 'tech-card d-flex flex-row': category.name === 'Technology' }">
+
+    <!-- IMAGE -->
+    <div class="position-relative image-wrapper"
+         [ngClass]="{ 'tech-image': category.name === 'Technology' }">
+      <img [src]="item.image" class="card-img-top rounded" />
+
+      <!-- TAG -->
+      <span *ngIf="item.tag"
+            class="badge position-absolute top-0 start-0 m-2"
+            [ngClass]="{
+              'bg-success': item.tag === 'New',
+              'bg-warning text-dark': item.tag === 'Favorite',
+              'bg-secondary': item.tag === 'Sold Out',
+              'bg-danger': item.tag?.includes('-')
+            }">
+        {{ item.tag }}
+      </span>
+
+      <!-- OVERLAY -->
+      <div class="overlay d-flex flex-column align-items-center justify-content-center">
+        <div class="tech-icons mb-2 d-flex gap-2">
+          <button class="icon-btn btn btn-light btn-sm p-1 rounded-circle">
+            <i class="bi bi-heart"></i>
+          </button>
+          <button class="icon-btn btn btn-light btn-sm p-1 rounded-circle">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+
+        <button *ngIf="!isInCart(item)" class="btn btn-success btn-sm" (click)="addToCart(item)">
+          Add To Cart
+        </button>
+        <button *ngIf="isInCart(item)" class="btn btn-success btn-sm" disabled>
+          ✔ Added to Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="card-body p-2" [ngClass]="{ 'tech-content': category.name === 'Technology' }">
+      <p class="mb-1 small">{{ item.name }}</p>
+      <h6 class="mb-1 fw-bold">
+        ${{ item.price }}
+        <small *ngIf="item.oldPrice" class="text-muted text-decoration-line-through ms-2">
+          ${{ item.oldPrice }}
+        </small>
+      </h6>
+      <p class="text-muted small mb-0">
+        by <span class="text-primary">{{ item.vendor }}</span>
+      </p>
+    </div>
+  </div>
+</ng-template>
+
+@if(!isSearchText && isMobileOrTablet){
+
+  <!-- Mobile/Laptop -->
+   <!-- MOBILE / TABLET -->
+  <div class="mb-3">
+
+    <div class="d-flex justify-content-between align-items-center">
+      <h6 class="mb-0">Shop By Categories</h6>
+
+      <!-- arrows -->
+      <div>
+        <button class="btn btn-light btn-sm me-1"
+                data-bs-target="#productCarousel"
+                data-bs-slide="prev">‹</button>
+
+        <button class="btn btn-light btn-sm"
+                data-bs-target="#productCarousel"
+                data-bs-slide="next">›</button>
+      </div>
+    </div>
+
+    <!-- SELECT DROPDOWN -->
+    <select class="form-select mt-2"
+            (change)="setCategory($event)">
+      <option *ngFor="let cat of categories" [value]="cat.name">
+        {{ cat.name }}
+      </option>
+    </select>
+
+    <div *ngIf="isMobileOrTablet && getSelectedCategoryData() as selectedCat">
+
+      <div id="productCarousel" class="carousel slide" data-bs-ride="false">
+
+        <!-- Slides -->
+        <div class="carousel-inner">
+
+          <div class="carousel-item"
+            *ngFor="let chunk of chunkProducts(selectedCat.items); let i = index"
+            [class.active]="i === 0">
+
+              <div class="d-flex justify-content-center gap-2 mt-4">
+                <ng-container *ngFor="let product of chunk">
+                  <ng-container *ngTemplateOutlet="productCard; context: { $implicit: product }"></ng-container>
+                </ng-container>
+              </div>
+         </div>
+        </div>    
+      </div>
+    </div>
+  </div>
+  <!-- Desktop -->
+}
+@if(!isSearchText && !isMobileOrTablet){
   <div class="d-flex justify-content-between align-items-center mb-3" >
     <h6>Shop By Categories</h6>
     <span class="text-success small">See All ›</span>
   </div>
-}
-@if(!isSearchText){
   <div class="row g-3" >
     <div class="col-lg-2 col-md-4 col-6" *ngFor="let cat of categories">
       <div 
@@ -23,7 +183,7 @@
   </div>
 }
   <div class="row g-3 mt-4" >
-      @if(!isSearchText){
+      @if(!isSearchText && !isMobileOrTablet){
         <div class="mt-4" *ngIf="getSelectedCategoryData() as selectedCat">
           <div class="row">
             <div class="col-lg-2 col-md-4 col-6 mb-4" *ngFor="let product of selectedCat.items">
@@ -44,9 +204,41 @@
                   </span>
                 </ng-container>
 
-                <!-- Image -->
-                <div class="ratio ratio-1x1 bg-light d-flex align-items-center justify-content-center">
+                <!-- Image with Overlay -->
+                <div class="ratio ratio-1x1 bg-light position-relative d-flex align-items-center justify-content-center">
+
                   <img *ngIf="product.image" [src]="product.image" class="img-fluid" [alt]="product.name">
+
+                  <!-- OVERLAY -->
+                  <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center"
+                      [ngClass]="{ 'd-none': product.tag === 'Sold Out' }">
+
+                    <!-- Heart / View Icons -->
+                    <div class="mb-2 d-flex gap-2">
+                      <button class="icon-btn btn btn-light btn-sm p-1 rounded-circle">
+                        <i class="bi bi-heart"></i>
+                      </button>
+                      <button class="icon-btn btn btn-light btn-sm p-1 rounded-circle">
+                        <i class="bi bi-eye"></i>
+                      </button>
+                    </div>
+
+                    <!-- Add to Cart Button -->
+                    <button 
+                      *ngIf="!isInCart(product)" 
+                      class="btn btn-dark btn-sm"
+                      (click)="addToCart(product)">
+                      Add to Cart
+                    </button>
+
+                    <button 
+                      *ngIf="isInCart(product)" 
+                      class="btn btn-success btn-sm" 
+                      disabled>
+                      ✔ Added to cart
+                    </button>
+
+                  </div>
                 </div>
 
                 <!-- Body -->
@@ -272,118 +464,107 @@
       <div *ngFor="let category of categories" class="mb-5">
 
         <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4>{{ category.name }}</h4>
+          <div [ngClass]="{
+              'd-flex justify-content-between align-items-center': !isMobileOrTablet,
+              'flex-column': isMobileOrTablet
+            }" class="mb-3">
+            <h4>{{ category.name }}</h4>
 
-          <!-- Filters -->
-          <div class="small">
-            <span 
-              *ngFor="let filter of category.filters"
-              class="me-3 cursor-pointer"
-              [ngClass]="{
-                'text-success fw-bold': category.selectedFilter === filter,
-                'text-muted': category.selectedFilter !== filter
-              }"
-              (click)="setFilter(category, filter)"
-            >
-              {{ filter | titlecase }}
-            </span>
-          </div>
+            <!-- Filters -->
+          <ng-container *ngTemplateOutlet="filterList; context: { $implicit: category }"></ng-container>
+
+          <!--  -->
         </div>
 
         <!-- GRID -->
         <div class="row">
+          <ng-container *ngIf="getFilteredItems(category).length > 0; else noData">
+            <div *ngFor="let item of getFilteredItems(category)" class="mb-4"
+            [ngClass]="{
+              'col-md-4 col-sm-6': category.name === 'Technology',
+              'col-md-2 col-sm-4': category.name !== 'Technology'
+            }">
 
-          <div *ngFor="let item of getFilteredItems(category)" class="mb-4"
-          [ngClass]="{
-            'col-md-4 col-sm-6': category.name === 'Technology',
-            'col-md-2 col-sm-4': category.name !== 'Technology'
-          }">
+              <!-- CARD -->
+              <div class="card product-card border-0"
+                  [ngClass]="{ 'tech-card d-flex flex-row': category.name === 'Technology' }">
 
-            <!-- CARD -->
-            <div class="card product-card border-0"
-                [ngClass]="{ 'tech-card d-flex flex-row': category.name === 'Technology' }">
+                <!-- IMAGE -->
+                <div class="position-relative image-wrapper"
+                    [ngClass]="{ 'tech-image': category.name === 'Technology' }">
 
-              <!-- IMAGE -->
-              <div class="position-relative image-wrapper"
-                  [ngClass]="{ 'tech-image': category.name === 'Technology' }">
+                  <img [src]="item.image" class="card-img-top rounded" />
 
-                <img [src]="item.image" class="card-img-top rounded" />
+                  <!-- TAG -->
+                  <span *ngIf="item.tag"
+                        class="badge position-absolute top-0 start-0 m-2"
+                        [ngClass]="{
+                          'bg-success': item.tag === 'New',
+                          'bg-warning text-dark': item.tag === 'Favorite',
+                          'bg-secondary': item.tag === 'Sold Out',
+                          'bg-danger': item.tag?.includes('-')
+                        }">
+                    {{ item.tag }}
+                  </span>
 
-                <!-- TAG -->
-                <span *ngIf="item.tag"
-                  class="badge position-absolute top-0 start-0 m-2"
-                  [ngClass]="{
-                    'bg-success': item.tag === 'New',
-                    'bg-warning text-dark': item.tag === 'Favorite',
-                    'bg-secondary': item.tag === 'Sold Out',
-                    'bg-danger': item.tag?.includes('-')
-                  }">
-                  {{ item.tag }}
-                </span>
+                  <!-- OVERLAY FOR ALL CATEGORIES -->
+                  <div class="overlay d-flex flex-column align-items-center justify-content-center">
 
-                <!-- DEFAULT OVERLAY -->
-                <div class="overlay" *ngIf="category.name !== 'Technology'">
-                  <button 
-                    *ngIf="!isInCart(item)" 
-                    class="btn btn-dark btn-sm"
-                    (click)="addToCart(item)">
-                    Add to Cart
-                  </button>
+                    <!-- Heart / Eye Icons -->
+                    <div class="tech-icons mb-2 d-flex gap-2">
+                      <button class="icon-btn btn btn-light btn-sm p-1 rounded-circle">
+                        <i class="bi bi-heart"></i>
+                      </button>
+                      <button class="icon-btn btn btn-light btn-sm p-1 rounded-circle">
+                        <i class="bi bi-eye"></i>
+                      </button>
+                    </div>
 
-                  <button 
-                    *ngIf="isInCart(item)" 
-                    class="btn btn-success btn-sm"
-                    disabled>
-                    Added ✔
-                  </button>
-                </div>
-
-                <!-- TECHNOLOGY OVERLAY -->
-                <div class="tech-overlay" *ngIf="category.name === 'Technology'">
-
-                  <div class="tech-icons">
-                    <button class="icon-btn">
-                      <i class="bi bi-heart"></i>
+                    <!-- Add to Cart Button -->
+                    <button *ngIf="!isInCart(item)" 
+                            class="btn btn-success btn-sm"
+                            (click)="addToCart(item)">
+                      Add To Cart
                     </button>
-                    <button class="icon-btn">
-                      <i class="bi bi-eye"></i>
+
+                    <button *ngIf="isInCart(item)" 
+                            class="btn btn-success btn-sm" 
+                            disabled>
+                      ✔ Added to Cart
                     </button>
+
                   </div>
-
-                  <button 
-                    *ngIf="!isInCart(item)" 
-                    class="btn btn-success btn-sm"
-                    (click)="addToCart(item)">
-                    Add To Cart
-                  </button>
-
                 </div>
 
-              </div>
+                <!-- CONTENT -->
+                <div class="card-body p-2"
+                    [ngClass]="{ 'tech-content': category.name === 'Technology' }">
 
-              <!-- CONTENT -->
-              <div class="card-body p-2"
-                  [ngClass]="{ 'tech-content': category.name === 'Technology' }">
+                  <p class="mb-1 small">{{ item.name }}</p>
 
-                <p class="mb-1 small">{{ item.name }}</p>
+                  <h6 class="mb-1 fw-bold">
+                    ${{ item.price }}
+                    <small *ngIf="item.oldPrice" class="text-muted text-decoration-line-through ms-2">
+                      ${{ item.oldPrice }}
+                    </small>
+                  </h6>
 
-                <h6 class="mb-1 fw-bold">
-                  ${{ item.price }}
-                  <small *ngIf="item.oldPrice" class="text-muted text-decoration-line-through ms-2">
-                    ${{ item.oldPrice }}
-                  </small>
-                </h6>
+                  <p class="text-muted small mb-0">
+                    by <span class="text-primary">{{ item.vendor }}</span>
+                  </p>
 
-                <p class="text-muted small mb-0">
-                  by <span class="text-primary">{{ item.vendor }}</span>
-                </p>
+                </div>
 
               </div>
 
             </div>
-
-          </div>
+          </ng-container>
+          <!-- No data template -->
+          <ng-template #noData>
+            <div class="text-center text-muted py-4">
+              <i class="bi bi-exclamation-circle me-2"></i> No items found in this category.
+            </div>
+          </ng-template>
 
         </div>
 

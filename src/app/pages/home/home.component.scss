@@ -1,0 +1,20 @@
+.margin_left {
+  width: 100%;
+  max-width: 1200px;   // desktop container width
+  margin: 0 auto;      // center horizontally
+  padding: 0 16px;     // default (mobile spacing)
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .margin_left {
+    padding: 0 24px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .margin_left {
+    padding: 0 32px;
+  }
+}

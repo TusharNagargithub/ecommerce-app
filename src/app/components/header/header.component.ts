@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import { ProductService } from '../../services/product.service';
+import { BaseComponent } from '../../base-component/base.component';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -25,8 +27,10 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
-  constructor(private productService: ProductService){}
+export class HeaderComponent extends BaseComponent implements OnDestroy {
+  constructor(private productService: ProductService){
+    super();
+  }
 
   public cartCount: number = 0;
   public searchText: string = '';
@@ -34,10 +38,13 @@ export class HeaderComponent {
   public categories: any = [];
 
   ngOnInit() {
-    this.productService.cartCount$.subscribe(count => {
+    this.productService.cartCount$.pipe(takeUntil(this.destroy$)).subscribe(count => {
       this.cartCount = count;
     });
     this.categories = this.productService.shopByCategories;
+  }
+  public override ngOnDestroy(): void {
+    super.ngOnDestroy();
   }
 
   public onSearch(): void {

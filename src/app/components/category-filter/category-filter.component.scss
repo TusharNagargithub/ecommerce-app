@@ -279,3 +279,41 @@
   width: 130px;
   border-radius: 6px;
 }
+
+
+
+
+/* wrapper controls exact size */
+.product-wrapper {
+  width: 50%;
+  height: 294px;
+  display: flex;
+}
+
+/* card fills wrapper */
+.product-card {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* image area */
+.product-img {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+}
+
+/* spacing exactly like Figma */
+.carousel-item .d-flex {
+  gap: 20px; /* matches your "Gap 8px" */
+}
+
+/* center the whole block */
+.carousel-inner {
+  display: flex;
+  align-items: center;
+}
